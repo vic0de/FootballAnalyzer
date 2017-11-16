@@ -1,5 +1,6 @@
 package com.legodo.football;
 
+import java.util.Arrays;
 import java.util.List;
 
 
@@ -25,14 +26,12 @@ class OpenLigaDBRepository implements Repository{
 
 	@Override
 	public List<IdentifiableDTO> getSeasons() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList(new IdentifiableDTO("2017", "2017/2018"), new IdentifiableDTO("2016", "2016/2017"), new IdentifiableDTO("2015", "2015/2016"));
 	}
 
 	@Override
 	public List<IdentifiableDTO> getLeagues() {
-		// TODO Auto-generated method stub
-		return null;
+		return Arrays.asList(new IdentifiableDTO("b1", "1.Bundesliga"), new IdentifiableDTO("b2", "2.Bundesliga"), new IdentifiableDTO("b3", "3.Bundesliga"));
 	}
 
 	@Override
@@ -47,7 +46,8 @@ class OpenLigaDBRepository implements Repository{
 		return null;
 	}
 	
-	String getAllMatches(){
+	String getAllMatches(RepositoryFilter filter){
+		String url = String.format("https://www.openligadb.de/api/getmatchdata/%s/%s" +  filter.leagueId + filter.seasonId);
 		return restClient.get("/api/getmatchdata/bl1/2016/8");
 	}
 }
