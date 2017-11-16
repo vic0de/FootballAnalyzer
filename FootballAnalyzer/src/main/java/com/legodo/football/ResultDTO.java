@@ -3,6 +3,10 @@ package com.legodo.football;
 public class ResultDTO extends IdentifiableDTO {
 	
 	
+	public ResultDTO(String id, String name) {
+		super(id, name);
+	}
+
 	/**
 	 * 
 	 */

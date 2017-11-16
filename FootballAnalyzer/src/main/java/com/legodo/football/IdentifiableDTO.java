@@ -14,6 +14,11 @@ public class IdentifiableDTO implements Serializable {
 	
 	private String name;
 
+	public IdentifiableDTO(String id, String name) {
+		this.id = id;
+		this.name = name;
+	}
+
 	public String getId() {
 		return id;
 	}
