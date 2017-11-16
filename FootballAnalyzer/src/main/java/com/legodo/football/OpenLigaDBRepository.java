@@ -2,25 +2,23 @@ package com.legodo.football;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+
+import com.legodo.football.util.LoggingFactory;
+import com.legodo.football.util.RestClient;
+
 
 class OpenLigaDBRepository implements Repository{
 	
 
+	private static final Logger LOG = LoggingFactory.make();
+
 	private  RestClient restClient;
-	  
-	  
-	  
-	  
 	  
 
 	public OpenLigaDBRepository() {
 		super();
-		try {
-			this.restClient = new RestClient("https://www.openligadb.de");
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
+		this.restClient = new RestClient("https://www.openligadb.de");
 	}
 
 	@Override
