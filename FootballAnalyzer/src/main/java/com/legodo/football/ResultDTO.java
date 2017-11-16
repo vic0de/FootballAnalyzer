@@ -22,7 +22,7 @@ public class ResultDTO extends IdentifiableDTO {
 	
 	private int losesCount;
 	
-	private int tideGamesCount;
+	private int tiedsCount;
 	
 	private int goalsCount;
 	
@@ -71,15 +71,7 @@ public class ResultDTO extends IdentifiableDTO {
 	public void setLosesCount(int losesCount) {
 		this.losesCount = losesCount;
 	}
-
-	public int getTideGamesCount() {
-		return tideGamesCount;
-	}
-
-	public void setTideGamesCount(int tideGamesCount) {
-		this.tideGamesCount = tideGamesCount;
-	}
-
+	
 	public int getGoalsCount() {
 		return goalsCount;
 	}
@@ -102,6 +94,14 @@ public class ResultDTO extends IdentifiableDTO {
 
 	public void setLogoUri(String logoUri) {
 		this.logoUri = logoUri;
+	}
+
+	public int getTiedsCount() {
+		return tiedsCount;
+	}
+
+	public void setTiedsCount(int tiedsCount) {
+		this.tiedsCount = tiedsCount;
 	}
 	
 }

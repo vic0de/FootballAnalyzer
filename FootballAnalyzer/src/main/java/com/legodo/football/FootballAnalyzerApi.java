@@ -70,7 +70,7 @@ public class FootballAnalyzerApi {
 			r.setPointsCount(10 + i);
 			r.setWinsCount(i);
 			r.setLosesCount(i);
-			r.setTideGamesCount(2);
+			r.setTiedsCount(2);
 			r.setGoalsCount(3);
 			r.setDiffCount(2);
 			r.setLogoUri("https://www.openligadb.de/images/teamicons/1_FC_Koeln.gif");
