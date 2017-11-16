@@ -1,28 +1,142 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html>
+
 <head>
-
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css">
-
-<!-- jQuery library -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-<!-- Popper JS -->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-
-<!-- Latest compiled JavaScript -->
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-
-
-
-<title>Football Analyser</title>
+	<title>Football Analyser</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
+	<link href="styles.css" rel="stylesheet">
+	<!-- jQuery library -->
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+	<!-- Popper JS -->
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+	<!-- Latest compiled JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+	
+	<script>
+		//populate the Drop Down List
+		$.getJSON('/api/league/list', function (data) {
+		     $.each(data, function (id, name) {
+		          alert(this.id);
+     			  alert(this.name);
+		         $('#league dropdown-item').append(
+		              $('<option></option>').val(id).html(name)
+		          );
+		     });
+		 });
+		$.getJSON('/api/league/list', function(data) {
+    	console.log(data);
+		});
+		$.getJSON('/api/seasons/list', function(data) {
+    	console.log(data);
+		});
+		$.getJSON('/api/results', function(data) {
+    	console.log(data);
+		});		
+	</script>
 </head>
+
 <body>
 
-<h1>Football Analyser</h1>
-<p>Football Analyser</p>
-
-<button type="button" class="btn">Basic</button>
+<div class="container">
+	<br>
+	<h1>Football Analyser</h1>
+	<br>
+	<table class="table">
+		<tr>
+			<td>Liga:</td>
+			<td>
+			<div class="dropdown" id="league">
+				<button name="drpLeague" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+				Liga auswählen...</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="#">Link 1</a>
+					<a class="dropdown-item" href="#">Link 2</a>
+					<a class="dropdown-item" href="#">Link 3</a> </div>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Saison:</td>
+			<td>
+			<div class="dropdown" id="season">
+				<button name="drpSeason" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+				Saison auswählen...</button>
+				<div class="dropdown-menu">
+					<a class="dropdown-item" href="#">Link 1</a>
+					<a class="dropdown-item" href="#">Link 2</a>
+					<a class="dropdown-item" href="#">Link 3</a> </div>
+			</div>
+			</td>
+		</tr>
+		<tr>
+			<td>Minute:</td>
+			<td>
+			<form oninput="numberMinute.value=minuteScale.value">
+				<input id="minuteScale" class="range" max="90" min="1" type="range" value="45">
+				<output name="numberMinute">
+				45</output>
+			</form>
+			</td>
+		</tr>
+	</table>
+</div>
+<br>
+<div class="container">
+	<h2>Bordered Table</h2>
+	<p>The .table-bordered class adds borders on all sides of the table and the 
+	cells:</p>
+	<table class="table table-bordered table-hover">
+		<thead>
+			<tr>
+				<th class="center">Platz</th>
+				<th>Verein</th>
+				<th class="center">Spiele</th>
+				<th class="center">Punkte</th>
+				<th class="center">S</th>
+				<th class="center">U</th>
+				<th class="center">N</th>
+				<th class="center">Tore</th>
+				<th class="center">Diff</th>
+			</tr>
+		</thead>
+		<tr>
+			<td class="center">18</td>
+			<td>Borussia Mönchengladbach</td>
+			<td class="center">34</td>
+			<td class="center">110</td>
+			<td class="center">34</td>
+			<td class="center">34</td>
+			<td class="center">34</td>
+			<td class="center">100:20</td>
+			<td class="center">134</td>
+		</tr>
+		<tr>
+			<td class="center">18</td>
+			<td>Borussia Mönchengladbach</td>
+			<td class="center">34</td>
+			<td class="center">110</td>
+			<td class="center">34</td>
+			<td class="center">34</td>
+			<td class="center">34</td>
+			<td class="center">100:20</td>
+			<td class="center">134</td>
+		</tr>
+		<tr>
+			<td class="center">18</td>
+			<td>Borussia Mönchengladbach</td>
+			<td class="center">34</td>
+			<td class="center">110</td>
+			<td class="center">34</td>
+			<td class="center">34</td>
+			<td class="center">34</td>
+			<td class="center">100:20</td>
+			<td class="center">134</td>
+		</tr>
+	</table>
+</div>
 
 </body>
+
 </html>
