@@ -18,22 +18,31 @@
 		//populate the Drop Down List
 		$.getJSON('/api/league/list', function (data) {
 		     $.each(data, function (id, name) {
-		          alert(this.id);
-     			  alert(this.name);
 		         $('#league-dropdown').append(
-		              $("<a class='dropdown-item' id=" + this.id +" href='#'>" + this.name + '</a>')
+		              $("<a class='dropdown-item' id='" + this.id + "' href='#'>" + this.name + "</a>")
 		          );
 		     });
 		 });
-		$.getJSON('/api/league/list', function(data) {
-    	console.log(data);
-		});
-		$.getJSON('/api/seasons/list', function(data) {
-    	console.log(data);
-		});
-		$.getJSON('/api/results', function(data) {
-    	console.log(data);
-		});		
+		$.getJSON('/api/seasons/list', function (data) {
+		     $.each(data, function (id, name) {
+		         $('#season-dropdown').append(
+		              $("<a class='dropdown-item' id='" + this.id + "' href='#'>" + this.name + "</a>")
+		          );
+		     });
+		 });
+		$.getJSON('/api/result', function (data) {
+		     $.each(data, function (rank, gamesCount, pointsCount, winsCount, losesCount, tiedsCount, goalsCount, diffCount, logoUri, id, name) {
+		         $('#generated_table').append(
+		              $("<tr><td class='center'>" + this.rank + "</td><td><img src='" + this.logoUri + "'> " + this.name + "</td><td class='center'>" + this.gamesCount + "</td><td class='center'>" + this.pointsCount + "</td><td class='center'>" + this.winsCount + "</td><td class='center'>" + this.tiedsCount + "</td><td class='center'>" + this.losesCount + "</td><td class='center'>" + this.goalsCount + "</td><td class='center'>" + this.diffCount + "</td></tr>")
+		          );
+		     });
+		 });
+		  $('a.dropdown-item').click(function(){
+		  	alert("Click");
+		   // $('#selected').text($(this).text());
+		   // $(".btn:first-child").text($(this).text());
+     	// $(".btn:first-child").val($(this).text());
+		  });		 
 	</script>
 </head>
 
@@ -47,26 +56,20 @@
 		<tr>
 			<td>Liga:</td>
 			<td>
-			<div class="dropdown" id="league">
+			<div class="dropdown">
 				<button name="drpLeague" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
 				Liga auswählen...</button>
-				<div class="dropdown-menu" id="league-dropdown">
-					<!--  <a class="dropdown-item" href="#">Link 1</a>
-					<a class="dropdown-item" href="#">Link 2</a>
-					<a class="dropdown-item" href="#">Link 3</a> --> </div>
+				<div class="dropdown-menu" id="league-dropdown"></div>
 			</div>
 			</td>
 		</tr>
 		<tr>
 			<td>Saison:</td>
 			<td>
-			<div class="dropdown" id="season">
+			<div class="dropdown">
 				<button name="drpSeason" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
 				Saison auswählen...</button>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">Link 1</a>
-					<a class="dropdown-item" href="#">Link 2</a>
-					<a class="dropdown-item" href="#">Link 3</a> </div>
+				<div class="dropdown-menu" id="season-dropdown"></div>
 			</div>
 			</td>
 		</tr>
@@ -87,7 +90,7 @@
 	<h2>Bordered Table</h2>
 	<p>The .table-bordered class adds borders on all sides of the table and the 
 	cells:</p>
-	<table class="table table-bordered table-hover">
+	<table id="generated_table" class="table table-bordered table-hover">
 		<thead>
 			<tr>
 				<th class="center">Platz</th>
@@ -101,39 +104,6 @@
 				<th class="center">Diff</th>
 			</tr>
 		</thead>
-		<tr>
-			<td class="center">18</td>
-			<td>Borussia Mönchengladbach</td>
-			<td class="center">34</td>
-			<td class="center">110</td>
-			<td class="center">34</td>
-			<td class="center">34</td>
-			<td class="center">34</td>
-			<td class="center">100:20</td>
-			<td class="center">134</td>
-		</tr>
-		<tr>
-			<td class="center">18</td>
-			<td>Borussia Mönchengladbach</td>
-			<td class="center">34</td>
-			<td class="center">110</td>
-			<td class="center">34</td>
-			<td class="center">34</td>
-			<td class="center">34</td>
-			<td class="center">100:20</td>
-			<td class="center">134</td>
-		</tr>
-		<tr>
-			<td class="center">18</td>
-			<td>Borussia Mönchengladbach</td>
-			<td class="center">34</td>
-			<td class="center">110</td>
-			<td class="center">34</td>
-			<td class="center">34</td>
-			<td class="center">34</td>
-			<td class="center">100:20</td>
-			<td class="center">134</td>
-		</tr>
 	</table>
 </div>
 
