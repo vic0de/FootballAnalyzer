@@ -30,21 +30,21 @@ public class RestClient {
 	  public RestClient(String serverUrl) throws Exception {
 		  
 		this.server = serverUrl;
-		KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
-	    keyStore.load(new FileInputStream(new File(keyStoreFile)), keyStorePassword.toCharArray());
-
-	    SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
-	            new SSLContextBuilder()
-	                    .loadTrustMaterial(null, new TrustSelfSignedStrategy())
-	                    .loadKeyMaterial(keyStore, keyStorePassword.toCharArray())
-	                    .build(),
-	            NoopHostnameVerifier.INSTANCE);
-
-	    HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
-
-	    ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
+//		KeyStore keyStore = KeyStore.getInstance(KeyStore.getDefaultType());
+//	    keyStore.load(new FileInputStream(new File(keyStoreFile)), keyStorePassword.toCharArray());
+//
+//	    SSLConnectionSocketFactory socketFactory = new SSLConnectionSocketFactory(
+//	            new SSLContextBuilder()
+//	                    .loadTrustMaterial(null, new TrustSelfSignedStrategy())
+//	                    .loadKeyMaterial(keyStore, keyStorePassword.toCharArray())
+//	                    .build(),
+//	            NoopHostnameVerifier.INSTANCE);
+//
+//	    HttpClient httpClient = HttpClients.custom().setSSLSocketFactory(socketFactory).build();
+//
+//	    ClientHttpRequestFactory requestFactory = new HttpComponentsClientHttpRequestFactory(httpClient);
 	    
-	    rest = new RestTemplate(requestFactory);
+	    rest = new RestTemplate();
 		
 		
 		
