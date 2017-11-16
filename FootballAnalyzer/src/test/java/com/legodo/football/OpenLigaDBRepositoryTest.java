@@ -21,8 +21,10 @@ public class OpenLigaDBRepositoryTest {
 	public void getAllMatches() {
 		
 		
-		
-		String s = respo.getAllMatches();	
+		RepositoryFilter filter = new RepositoryFilter();
+		filter.leagueId = "b1";
+		filter.seasonId = "2016";
+		String s = respo.getAllMatches(filter);	
 		assertEquals("sdsd", s);
 		
 	}
