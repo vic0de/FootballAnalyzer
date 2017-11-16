@@ -2,12 +2,12 @@ package com.legodo.football;
 
 public class RepositoryFilter {
 	
-	private String seasonId;
+	String seasonId;
 	
-	private String leagueId;
+	String leagueId;
 	
-	private int matchDay;
+	int matchDay;
 	
-	private int minute;
+	int minute;
 
 }
