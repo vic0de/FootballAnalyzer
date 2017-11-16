@@ -20,8 +20,8 @@
 		     $.each(data, function (id, name) {
 		          alert(this.id);
      			  alert(this.name);
-		         $('#league dropdown-item').append(
-		              $('<option></option>').val(id).html(name)
+		         $('#league-dropdown').append(
+		              $("<a class='dropdown-item' id=" + this.id +" href='#'>" + this.name + '</a>')
 		          );
 		     });
 		 });
@@ -50,10 +50,10 @@
 			<div class="dropdown" id="league">
 				<button name="drpLeague" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
 				Liga auswählen...</button>
-				<div class="dropdown-menu">
-					<a class="dropdown-item" href="#">Link 1</a>
+				<div class="dropdown-menu" id="league-dropdown">
+					<!--  <a class="dropdown-item" href="#">Link 1</a>
 					<a class="dropdown-item" href="#">Link 2</a>
-					<a class="dropdown-item" href="#">Link 3</a> </div>
+					<a class="dropdown-item" href="#">Link 3</a> --> </div>
 			</div>
 			</td>
 		</tr>
