@@ -16,17 +16,23 @@
 <script>
 
 	 function fillTable (leagueId, seasonId, min) {
-		$.getJSON('/api/result?leagueId=' + leagueId + "&seasonId=" + seasonId + "&min=" + min, function (data) {
-		     $.each(data, function (rank, gamesCount, pointsCount, winsCount, losesCount, tiedsCount, goalsCount, diffCount, logoUri, id, name) {
-		         $('#generated_table').append(
-		              $("<tr><td class='center'>" + this.rank + "</td><td><img src='" + this.logoUri + "'> " + this.name + "</td><td class='center'>" + this.gamesCount + "</td><td class='center'>" + this.pointsCount + "</td><td class='center'>" + this.winsCount + "</td><td class='center'>" + this.tiedsCount + "</td><td class='center'>" + this.losesCount + "</td><td class='center'>" + this.goalsCount + "</td><td class='center'>" + this.diffCount + "</td></tr>")
-		          );
-		     });
-		 });	 
+	 	if(leagueId != "" && seasonId != "") {
+			$.getJSON('/api/result?leagueId=' + leagueId + "&seasonId=" + seasonId + "&min=" + min, function (data) {
+				$('#generated_table').empty();
+			     $.each(data, function (rank, gamesCount, pointsCount, winsCount, losesCount, tiedsCount, goalsCount, diffCount, logoUri, id, name) {
+			         $('#generated_table').append(
+			              $("<tr><td class='center'>" + this.rank + "</td><td><img src='" + this.logoUri + "'> " + this.name + "</td><td class='center'>" + this.gamesCount + "</td><td class='center'>" + this.pointsCount + "</td><td class='center'>" + this.winsCount + "</td><td class='center'>" + this.tiedsCount + "</td><td class='center'>" + this.losesCount + "</td><td class='center'>" + this.goalsCount + "</td><td class='center'>" + this.diffCount + "</td></tr>")
+			          );
+			     });
+			 });
+		 } else {
+		 	return;
+		}	 
 	}	
 
-	var leagueId ="";
-	var seasonId ="";
+	var leagueId = "";
+	var seasonId = "";
+	var leagueName = "";
 
 	$.getJSON('/api/league/list', function (data) {
 		$.each(data, function (id, name) {
@@ -38,6 +44,9 @@
 			$('#league-dropdown .dropdown-item').click(function(e){		 
 				$("#btnLeague:first-child").text($(this).text());
 				leagueId =  $(this).attr('id');
+				leagueName = $(this).text();
+				$('#season-dropdown').empty();
+				$("#btnSeason:first-child").text("Saison auswählen...");
 				$.getJSON('/api/season/list?leagueId=' + leagueId, function (data) {
 				     $.each(data, function (id, name) {
 				         $('#season-dropdown').append(
@@ -48,6 +57,12 @@
 						$('#season-dropdown .dropdown-item').click(function(e){		 
 							$("#btnSeason:first-child").text($(this).text());
 							seasonId =  $(this).attr('id');	
+							$('#label').empty();
+							$('#label').append(
+								$("<h2 id='label'>Tabelle für " + leagueName  + " in der Saison " + $(this).text() + "</h2>")
+							);
+							$('#minuteScale').val(90);
+							$('#numberMinute').text("90");							
 							fillTable (leagueId, seasonId, 90);								
 						});		  	
 					});			     
@@ -101,9 +116,8 @@
 </div>
 <br>
 <div class="container">
-	<h2>Tabelle für</h2>
-	<p>The .table-bordered class adds borders on all sides of the table and the 
-	cells:</p>
+	<h2 id="label">Tabelle</h2>
+	<br>
 	<table id="generated_table" class="table table-bordered table-hover">
 		<thead>
 			<tr>
