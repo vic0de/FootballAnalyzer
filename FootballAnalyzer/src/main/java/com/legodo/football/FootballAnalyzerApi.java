@@ -48,8 +48,8 @@ public class FootballAnalyzerApi {
 	public String result(@RequestParam(value = "leagueid", required = true, defaultValue = "") String leagueid,
 						 @RequestParam(value = "seasonid", required = true, defaultValue = "") String seasonid,
 						 @RequestParam(value = "min", 	 required = true, defaultValue = "") String min) throws IOException {
-		LOG.info("GET result.");
-		return new Gson().toJson(getResults());		
+		LOG.info("GET result. leagueid=" + leagueid + ", seasonid=" + seasonid + ", min=" + min);
+		return new Gson().toJson(getResults(min));		
 	}
 	
 	
@@ -65,11 +65,11 @@ public class FootballAnalyzerApi {
 	}
 	
 	
-	private List<ResultDTO> getResults(){
+	private List<ResultDTO> getResults(String min){
 		
 		List<ResultDTO> results = new ArrayList<>();
 		for(int i=1; i < 19; i++ ) {
-			ResultDTO r = new ResultDTO("idr-" + i , "Team " + i);
+			ResultDTO r = new ResultDTO("idr-" + i , "Team " + i + " " + min);
 			r.setRank(i);
 			r.setGamesCount(i);
 			r.setPointsCount(10 + i);
