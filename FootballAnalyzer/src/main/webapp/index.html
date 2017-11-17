@@ -2,64 +2,77 @@
 <html>
 
 <head>
-	<title>Football Analyser</title>
-	<meta charset="utf-8">
-	<meta name="viewport" content="width=device-width, initial-scale=1">
-	<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
-	<link href="styles.css" rel="stylesheet">
-	<!-- jQuery library -->
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-	<!-- Popper JS -->
-	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
-	<!-- Latest compiled JavaScript -->
-	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
-	
-	<script>
-		//populate the Drop Down List
-		$.getJSON('/api/league/list', function (data) {
-		     $.each(data, function (id, name) {
-		         $('#league-dropdown').append(
-		              $("<a class='dropdown-item' id='" + this.id + "' href='#'>" + this.name + "</a>")
-		          );
-		     });
-		 });
-		$.getJSON('/api/seasons/list', function (data) {
-		     $.each(data, function (id, name) {
-		         $('#season-dropdown').append(
-		              $("<a class='dropdown-item' id='" + this.id + "' href='#'>" + this.name + "</a>")
-		          );
-		     });
-		 });
-		$.getJSON('/api/result', function (data) {
+<title>Football Analyser</title>
+<meta charset="utf-8">
+<meta content="width=device-width, initial-scale=1" name="viewport">
+<link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" rel="stylesheet">
+<link href="styles.css" rel="stylesheet">
+<!-- jQuery library -->
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<!-- Popper JS -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.6/umd/popper.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
+<script>
+
+	 function fillTable (leagueId, seasonId, min) {
+		$.getJSON('/api/result?leagueId=' + leagueId + "&seasonId=" + seasonId + "&min=" + min, function (data) {
 		     $.each(data, function (rank, gamesCount, pointsCount, winsCount, losesCount, tiedsCount, goalsCount, diffCount, logoUri, id, name) {
 		         $('#generated_table').append(
 		              $("<tr><td class='center'>" + this.rank + "</td><td><img src='" + this.logoUri + "'> " + this.name + "</td><td class='center'>" + this.gamesCount + "</td><td class='center'>" + this.pointsCount + "</td><td class='center'>" + this.winsCount + "</td><td class='center'>" + this.tiedsCount + "</td><td class='center'>" + this.losesCount + "</td><td class='center'>" + this.goalsCount + "</td><td class='center'>" + this.diffCount + "</td></tr>")
 		          );
 		     });
-		 });
-		  $('a.dropdown-item').click(function(){
-		  	alert("Click");
-		   // $('#selected').text($(this).text());
-		   // $(".btn:first-child").text($(this).text());
-     	// $(".btn:first-child").val($(this).text());
-		  });		 
-	</script>
+		 });	 
+	}	
+
+	var leagueId ="";
+	var seasonId ="";
+
+	$.getJSON('/api/league/list', function (data) {
+		$.each(data, function (id, name) {
+			$('#league-dropdown').append(
+				$("<a class='dropdown-item' id='" + this.id + "' href='#'>" + this.name + "</a>")
+			);
+		});
+		$(document).ready(function(){
+			$('#league-dropdown .dropdown-item').click(function(e){		 
+				$("#btnLeague:first-child").text($(this).text());
+				leagueId =  $(this).attr('id');
+				$.getJSON('/api/season/list?leagueId=' + leagueId, function (data) {
+				     $.each(data, function (id, name) {
+				         $('#season-dropdown').append(
+				              $("<a class='dropdown-item' id='" + this.id + "' href='#'>" + this.name + "</a>")
+				          );
+				     });
+					$(document).ready(function(){
+						$('#season-dropdown .dropdown-item').click(function(e){		 
+							$("#btnSeason:first-child").text($(this).text());
+							seasonId =  $(this).attr('id');	
+							fillTable (leagueId, seasonId, 90);								
+						});		  	
+					});			     
+				 });								
+			});					  	
+		});			 		     
+	 });	 
+</script>
 </head>
 
 <body>
 
 <div class="container">
 	<br>
-	<h1>Football Analyser</h1>
+	<h1>Bundesliga Analyser</h1>
 	<br>
 	<table class="table">
 		<tr>
 			<td>Liga:</td>
 			<td>
 			<div class="dropdown">
-				<button name="drpLeague" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+				<button id="btnLeague" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" name="drpLeague" type="button">
 				Liga auswählen...</button>
-				<div class="dropdown-menu" id="league-dropdown"></div>
+				<div id="league-dropdown" class="dropdown-menu">
+				</div>
 			</div>
 			</td>
 		</tr>
@@ -67,19 +80,20 @@
 			<td>Saison:</td>
 			<td>
 			<div class="dropdown">
-				<button name="drpSeason" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" type="button">
+				<button id="btnSeason" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" name="drpSeason" type="button">
 				Saison auswählen...</button>
-				<div class="dropdown-menu" id="season-dropdown"></div>
+				<div id="season-dropdown" class="dropdown-menu">
+				</div>
 			</div>
 			</td>
 		</tr>
 		<tr>
-			<td>Minute:</td>
+			<td>Spiellänge:</td>
 			<td>
 			<form oninput="numberMinute.value=minuteScale.value">
-				<input id="minuteScale" class="range" max="90" min="1" type="range" value="45">
+				<input id="minuteScale" class="range" max="90" min="1" type="range" value="90" onchange="fillTable (leagueId, seasonId, this.value)">
 				<output name="numberMinute">
-				45</output>
+				90</output>
 			</form>
 			</td>
 		</tr>
@@ -87,7 +101,7 @@
 </div>
 <br>
 <div class="container">
-	<h2>Bordered Table</h2>
+	<h2>Tabelle für</h2>
 	<p>The .table-bordered class adds borders on all sides of the table and the 
 	cells:</p>
 	<table id="generated_table" class="table table-bordered table-hover">
