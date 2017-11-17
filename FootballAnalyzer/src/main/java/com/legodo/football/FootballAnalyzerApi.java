@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +22,9 @@ import com.legodo.football.util.LoggingFactory;
 public class FootballAnalyzerApi {
 	
 	private static final Logger LOG = LoggingFactory.make();
+	
+	@Autowired
+	private LeagueService leagueService;
 
 	
 	
@@ -27,12 +32,12 @@ public class FootballAnalyzerApi {
 	@ResponseBody
 	public String leagues() throws IOException {
 		LOG.info("GET all leagues.");
-		return new Gson().toJson(getLeagues());		
+		return new Gson().toJson(leagueService.allLeagues());	
 	}
 	
-	@RequestMapping(value = "/seasons/list", method = RequestMethod.GET)
+	@RequestMapping(value = "/season/list", method = RequestMethod.GET)
 	@ResponseBody
-	public String seasons() throws IOException {
+	public String seasons(@RequestParam(value = "leagueid", required = true, defaultValue = "") String leagueid) throws IOException {
 		LOG.info("GET all seasons.");
 		return new Gson().toJson(getSeasons());		
 	}
@@ -40,8 +45,8 @@ public class FootballAnalyzerApi {
 	
 	@RequestMapping(value = "/result", method = RequestMethod.GET)
 	@ResponseBody
-	public String result(@RequestParam(value = "league", required = true, defaultValue = "") String league,
-						 @RequestParam(value = "season", required = true, defaultValue = "") String season,
+	public String result(@RequestParam(value = "leagueid", required = true, defaultValue = "") String leagueid,
+						 @RequestParam(value = "seasonid", required = true, defaultValue = "") String seasonid,
 						 @RequestParam(value = "min", 	 required = true, defaultValue = "") String min) throws IOException {
 		LOG.info("GET result.");
 		return new Gson().toJson(getResults());		
