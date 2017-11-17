@@ -2,7 +2,6 @@ package com.legodo.football;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 
@@ -17,14 +16,17 @@ import org.springframework.web.bind.annotation.RestController;
 import com.google.gson.Gson;
 import com.legodo.football.util.LoggingFactory;
 
+
 @RestController
 @RequestMapping(value = "/api")
 public class FootballAnalyzerApi {
 	
 	private static final Logger LOG = LoggingFactory.make();
 	
+
+	
 	@Autowired
-	private LeagueService leagueService;
+	OpenLigaDBRepository repo;
 
 	
 	
@@ -32,14 +34,14 @@ public class FootballAnalyzerApi {
 	@ResponseBody
 	public String leagues() throws IOException {
 		LOG.info("GET all leagues.");
-		return new Gson().toJson(leagueService.allLeagues());	
+		return new Gson().toJson(repo.getLeagues());	
 	}
 	
 	@RequestMapping(value = "/season/list", method = RequestMethod.GET)
 	@ResponseBody
 	public String seasons(@RequestParam(value = "leagueid", required = true, defaultValue = "") String leagueid) throws IOException {
 		LOG.info("GET all seasons.");
-		return new Gson().toJson(getSeasons());		
+		return new Gson().toJson(repo.getSeasons());		
 	}
 	
 	
@@ -49,19 +51,13 @@ public class FootballAnalyzerApi {
 						 @RequestParam(value = "seasonid", required = true, defaultValue = "") String seasonid,
 						 @RequestParam(value = "min", 	 required = true, defaultValue = "") String min) throws IOException {
 		LOG.info("GET result. leagueid=" + leagueid + ", seasonid=" + seasonid + ", min=" + min);
+
+		RepositoryFilter filter = new RepositoryFilter();
+		filter.leagueId = leagueid;
+		filter.seasonId = seasonid;
+		String josn = repo.getAllMatches(filter);
+		LOG.info(josn);
 		return new Gson().toJson(getResults(min));		
-	}
-	
-	
-	private List<IdentifiableDTO> getLeagues(){
-		return Arrays.asList(new IdentifiableDTO("idl-1", "1. Liga"), new IdentifiableDTO("idl-2", "2. Liga"), new IdentifiableDTO("idl-3", "3. Liga"));	
-	}
-	
-	private List<IdentifiableDTO> getSeasons(){
-		return Arrays.asList(	new IdentifiableDTO("ids-1", "2013/2014"), 
-								new IdentifiableDTO("ids-2", "2014/2015"), 
-								new IdentifiableDTO("ids-3", "2015/2016"),
-								new IdentifiableDTO("ids-4", "2016/2017"));	
 	}
 	
 	
