@@ -4,22 +4,24 @@ import java.util.Arrays;
 import java.util.List;
 
 import org.slf4j.Logger;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 
 import com.legodo.football.util.LoggingFactory;
-import com.legodo.football.util.RestClient;
 
 
+@Component
 class OpenLigaDBRepository implements Repository{
 	
 
 	private static final Logger LOG = LoggingFactory.make();
 
-	private  RestClient restClient;
+	@Autowired
+	private OpenLigaDBClient client;
 	  
 
 	public OpenLigaDBRepository() {
 		super();
-		this.restClient = new RestClient("https://www.openligadb.de");
 	}
 
 	@Override
@@ -29,7 +31,7 @@ class OpenLigaDBRepository implements Repository{
 
 	@Override
 	public List<IdentifiableDTO> getLeagues() {
-		return Arrays.asList(new IdentifiableDTO("b1", "1.Bundesliga"), new IdentifiableDTO("b2", "2.Bundesliga"), new IdentifiableDTO("b3", "3.Bundesliga"));
+		return Arrays.asList(new IdentifiableDTO("bl1", "1.Bundesliga"), new IdentifiableDTO("bl2", "2.Bundesliga"), new IdentifiableDTO("bl3", "3.Bundesliga"));
 	}
 
 	@Override
@@ -45,7 +47,12 @@ class OpenLigaDBRepository implements Repository{
 	}
 	
 	String getAllMatches(RepositoryFilter filter){
-		String url = String.format("https://www.openligadb.de/api/getmatchdata/%s/%s" +  filter.leagueId + filter.seasonId);
-		return restClient.get("/api/getmatchdata/bl1/2016/8");
+//		String url = String.format("https://www.openligadb.de/api/getmatchdata/%s/%s" +  filter.leagueId + filter.seasonId);
+		if(filter != null) {
+			String json =  client.getAllMatches(filter.leagueId, filter.seasonId);
+			LOG.info(json);
+			return json;
+		}
+		return "";
 	}
 }
