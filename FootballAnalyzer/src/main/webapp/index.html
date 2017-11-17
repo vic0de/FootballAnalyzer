@@ -15,9 +15,13 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js"></script>
 <script>
 
+	var leagueId = "";
+	var seasonId = "";
+	var leagueName = "";
+
 	 function fillTable (leagueId, seasonId, min) {
 	 	if(leagueId != "" && seasonId != "") {
-			$.getJSON('/api/result?leagueId=' + leagueId + "&seasonId=" + seasonId + "&min=" + min, function (data) {
+			$.getJSON('/api/result?leagueid=' + leagueId + "&seasonid=" + seasonId + "&min=" + min, function (data) {
 				$('#generated_table').empty();
 			     $.each(data, function (rank, gamesCount, pointsCount, winsCount, losesCount, tiedsCount, goalsCount, diffCount, logoUri, id, name) {
 			         $('#generated_table').append(
@@ -29,10 +33,6 @@
 		 	return;
 		}	 
 	}	
-
-	var leagueId = "";
-	var seasonId = "";
-	var leagueName = "";
 
 	$.getJSON('/api/league/list', function (data) {
 		$.each(data, function (id, name) {
