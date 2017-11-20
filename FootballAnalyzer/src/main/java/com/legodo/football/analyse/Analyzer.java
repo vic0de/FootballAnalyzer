@@ -106,7 +106,7 @@ public class Analyzer {
 	
 	private ResultDTO convert2ResultDTO(int rank, Score score, Season season){
 		Team team = season.teams.get(score.teamId);
-		return new ResultDTO(team.id, team.name, rank, 34, score.point, score.win, score.loss, score.draw, score.goal, score.getDiff(), team.iconUri);
+		return new ResultDTO(team.id, team.name, rank, season.maxMatchDay(), score.point, score.win, score.loss, score.draw, score.goal, score.getDiff(), team.iconUri);
 	}
 	
 	List<MatchGoal> converter2MatchGoalList(Season season, Match match) {
