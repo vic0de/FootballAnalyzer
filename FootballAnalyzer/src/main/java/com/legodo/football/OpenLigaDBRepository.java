@@ -1,7 +1,9 @@
 package com.legodo.football;
 
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,6 +17,8 @@ class OpenLigaDBRepository implements Repository{
 	
 
 	private static final Logger LOG = LoggingFactory.make();
+	
+	private static final  Map<String, String> JSON_DATA_CACHE = new HashMap<>();
 
 	@Autowired
 	private OpenLigaDBClient client;
@@ -49,10 +53,17 @@ class OpenLigaDBRepository implements Repository{
 	String getAllMatches(RepositoryFilter filter){
 //		String url = String.format("https://www.openligadb.de/api/getmatchdata/%s/%s" +  filter.leagueId + filter.seasonId);
 		if(filter != null) {
-			String json =  client.getAllMatches(filter.leagueId, filter.seasonId);
+			String json =  client.getAllMatches(filter.seasonId, filter.leagueId);
 			LOG.info(json);
+			if(!JSON_DATA_CACHE.containsKey(filter.getKey())) {
+				JSON_DATA_CACHE.put(filter.getKey(), json);
+			}
 			return json;
 		}
 		return "";
+	}
+	
+	String getChachedJson(String key){
+		return JSON_DATA_CACHE.get(key);
 	}
 }

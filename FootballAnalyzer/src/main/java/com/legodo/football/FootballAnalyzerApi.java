@@ -55,9 +55,7 @@ public class FootballAnalyzerApi {
 						 @RequestParam(value = "min", 	 required = true, defaultValue = "") String min) throws IOException {
 		LOG.info("GET result. leagueid=" + leagueid + ", seasonid=" + seasonid + ", min=" + min);
 
-		RepositoryFilter filter = new RepositoryFilter();
-		filter.leagueId = leagueid;
-		filter.seasonId = seasonid;
+		RepositoryFilter filter = new RepositoryFilter(seasonid, leagueid);
 		String json = repo.getAllMatches(filter);
 		LOG.info(json);
 		Gson gson = new Gson();

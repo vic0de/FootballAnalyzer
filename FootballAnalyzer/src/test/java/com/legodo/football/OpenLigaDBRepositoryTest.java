@@ -26,7 +26,7 @@ public class OpenLigaDBRepositoryTest {
 	public void getAllMatches() {
 		
 		
-		RepositoryFilter filter = new RepositoryFilter();
+		RepositoryFilter filter = new RepositoryFilter("","");
 		filter.leagueId = "b1";
 		filter.seasonId = "2016";
 		String  all = respo.getAllMatches(filter);	

@@ -10,5 +10,5 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public interface OpenLigaDBClient {
  
     @RequestMapping(method = RequestMethod.GET, value = "/api/getmatchdata/{league}/{season}", produces = "application/json; charset=UTF-8")
-    String getAllMatches(@PathVariable("league") String league, @PathVariable("season") String season);
+    String getAllMatches(@PathVariable("season") String season, @PathVariable("league") String league);
  }

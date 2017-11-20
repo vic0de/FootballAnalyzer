@@ -9,6 +9,7 @@ import org.springframework.cloud.netflix.feign.EnableFeignClients;
 import org.springframework.cloud.netflix.hystrix.dashboard.EnableHystrixDashboard;
 import org.springframework.context.annotation.Bean;
 
+import com.netflix.hystrix.HystrixCommandProperties;
 import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServlet;
 
 
@@ -21,6 +22,9 @@ import com.netflix.hystrix.contrib.metrics.eventstream.HystrixMetricsStreamServl
 public class FootballAnalyzerApplication {
 
 	public static void main(String[] args) {
+		HystrixCommandProperties.Setter().withExecutionTimeoutEnabled(true);
+		HystrixCommandProperties.Setter().withExecutionTimeoutInMilliseconds(4000);
+
 		SpringApplication.run(FootballAnalyzerApplication.class, args);					
 	}
 	
