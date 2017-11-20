@@ -7,7 +7,7 @@ public class Team2 {
 
 	@SerializedName("TeamId")
 	@Expose
-	private Integer teamId;
+	private String teamId;
 	@SerializedName("TeamName")
 	@Expose
 	private String teamName;
@@ -18,11 +18,11 @@ public class Team2 {
 	@Expose
 	private String teamIconUrl;
 
-	public Integer getTeamId() {
+	public String getTeamId() {
 		return teamId;
 	}
 
-	public void setTeamId(Integer teamId) {
+	public void setTeamId(String teamId) {
 		this.teamId = teamId;
 	}
 

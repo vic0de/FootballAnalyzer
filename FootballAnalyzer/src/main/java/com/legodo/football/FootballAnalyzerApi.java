@@ -14,6 +14,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.legodo.football.analyse.Analyzer;
+import com.legodo.football.openligadb.json.Match;
 import com.legodo.football.util.LoggingFactory;
 
 
@@ -55,30 +58,35 @@ public class FootballAnalyzerApi {
 		RepositoryFilter filter = new RepositoryFilter();
 		filter.leagueId = leagueid;
 		filter.seasonId = seasonid;
-		String josn = repo.getAllMatches(filter);
-		LOG.info(josn);
-		return new Gson().toJson(getResults(min));		
+		String json = repo.getAllMatches(filter);
+		LOG.info(json);
+		Gson gson = new Gson();
+		List<Match> matches = gson.fromJson(json, new TypeToken<List<Match>>(){}.getType());
+		Analyzer analyzer = new Analyzer();
+		return gson.toJson(getResults(matches,min));		
 	}
 	
 	
-	private List<ResultDTO> getResults(String min){
+	private List<ResultDTO> getResults(List<Match> matches, String min){
+		Analyzer analyzer = new Analyzer();
+		return analyzer.analyze(Integer.valueOf(min), matches);
 		
-		List<ResultDTO> results = new ArrayList<>();
-		for(int i=1; i < 19; i++ ) {
-			ResultDTO r = new ResultDTO("idr-" + i , "Team " + i + " " + min);
-			r.setRank(i);
-			r.setGamesCount(i);
-			r.setPointsCount(10 + i);
-			r.setWinsCount(i);
-			r.setLosesCount(i);
-			r.setTiedsCount(2);
-			r.setGoalsCount(3);
-			r.setDiffCount(2);
-			r.setLogoUri("https://www.openligadb.de/images/teamicons/1_FC_Koeln.gif");
-			results.add(r);
-		}
 		
-		return results;
+//		List<ResultDTO> results = new ArrayList<>();
+//		for(int i=1; i < 19; i++ ) {
+//			ResultDTO r = new ResultDTO("idr-" + i , "Team " + i + " " + min);
+//			r.setRank(i);
+//			r.setPointsCount(10 + i);
+//			r.setWinsCount(i);
+//			r.setLosesCount(i);
+//			r.setTiedsCount(2);
+//			r.setGoalsCount(3);
+//			r.setDiffCount(2);
+//			r.setLogoUri("https://www.openligadb.de/images/teamicons/1_FC_Koeln.gif");
+//			results.add(r);
+//		}
+//		
+//		return results;
 
 	}
 	

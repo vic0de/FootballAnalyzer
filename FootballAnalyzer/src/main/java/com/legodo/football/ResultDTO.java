@@ -32,6 +32,20 @@ public class ResultDTO extends IdentifiableDTO {
 	
 	
 
+	public ResultDTO(String id, String name, int rank, int gamesCount, int pointsCount, int winsCount, int losesCount,
+			int tiedsCount, int goalsCount, int diffCount, String logoUri) {
+		super(id, name);
+		this.rank = rank;
+		this.gamesCount = gamesCount;
+		this.pointsCount = pointsCount;
+		this.winsCount = winsCount;
+		this.losesCount = losesCount;
+		this.tiedsCount = tiedsCount;
+		this.goalsCount = goalsCount;
+		this.diffCount = diffCount;
+		this.logoUri = logoUri;
+	}
+
 	public int getRank() {
 		return rank;
 	}

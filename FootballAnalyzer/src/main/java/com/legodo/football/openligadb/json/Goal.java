@@ -16,7 +16,7 @@ public class Goal {
 	private Integer scoreTeam2;
 	@SerializedName("MatchMinute")
 	@Expose
-	private Object matchMinute;
+	private Integer matchMinute;
 	@SerializedName("GoalGetterID")
 	@Expose
 	private Integer goalGetterID;
@@ -60,11 +60,11 @@ public class Goal {
 		this.scoreTeam2 = scoreTeam2;
 	}
 
-	public Object getMatchMinute() {
+	public Integer getMatchMinute() {
 		return matchMinute;
 	}
 
-	public void setMatchMinute(Object matchMinute) {
+	public void setMatchMinute(Integer matchMinute) {
 		this.matchMinute = matchMinute;
 	}
 
