@@ -30,7 +30,7 @@ public class Analyzer {
 		// matchgoals are sorted by minute
 		season.matchGoals.sort((matchgoal1, matchgoal2)-> matchgoal1.minute - matchgoal2.minute);
 		Map<Integer, List<MatchGoal>> matchGoalsByMinute = season.matchGoals.stream().collect(Collectors.groupingBy(matchGoal -> matchGoal.minute, Collectors.toList()));
-		IntStream.range(1, 90).forEach(i -> completeMatchGoalByMinute(i, matchGoalsByMinute, season));
+		IntStream.range(1, 91).forEach(i -> completeMatchGoalByMinute(i, matchGoalsByMinute, season));
 		return calculateTable(minute, matchGoalsByMinute, season); 
 		
 	}
