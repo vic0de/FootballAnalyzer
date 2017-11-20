@@ -17,10 +17,18 @@ public class Score implements IntConsumer{
 	}
 	
 	Score(String teamId, int goal, int counterGoal) {
-		super();
 		this.teamId = teamId;
 		this.goal = goal;
 		this.counterGoal = counterGoal;
+		if(goal > counterGoal) {
+			point = 3;
+			win = 1;
+		}else if(goal == counterGoal) {
+			point = 1;
+			draw = 1;
+		}else {
+			loss = 1;
+		}
 	}
 
 	
@@ -35,14 +43,10 @@ public class Score implements IntConsumer{
 	public Score combine(Score other) {
 		goal += other.goal;
 		counterGoal += other.counterGoal;
-		win += (other.goal > other.counterGoal ? 1 : 0);
-		draw += (other.goal == other.counterGoal ? 1 : 0);
-		loss += other.goal < other.counterGoal ? 1 : 0;
-		if(other.goal > other.counterGoal) {
-			point += 3;
-		}else if(other.goal == other.counterGoal) {
-			point += 1;
-		}
+		win += other.win;
+		draw += other.draw;
+		loss += other.loss;
+		point += other.point;
 		return this;
 	}
 
