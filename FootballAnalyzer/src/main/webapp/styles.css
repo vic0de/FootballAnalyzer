@@ -16,12 +16,16 @@
 	height: 20px;
 }
 
+.table-container{
+	position: relative;
+}
+
 .spinner {
-    width: 70px;
-    text-align: center;
-    position: relative;
-    margin: auto;
-    top: 120px;
+   position: absolute;
+   top: 160px;
+   left: 50%;
+
+
 }
 
 .spinner > div {
