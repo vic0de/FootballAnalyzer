@@ -1,4 +1,4 @@
-﻿.dropdown-toggle {
+.dropdown-toggle {
     width:200px;
     text-align:left;
 }
@@ -9,4 +9,9 @@
 
 .center {
     text-align: center;
+}
+
+.logo-team {
+	width: 20px;
+	height: 20px;
 }
