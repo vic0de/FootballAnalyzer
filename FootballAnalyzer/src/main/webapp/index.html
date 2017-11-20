@@ -18,20 +18,25 @@
 	var leagueId = "";
 	var seasonId = "";
 	var leagueName = "";
+	
+
 
 	 function fillTable (leagueId, seasonId, min) {
 	 	if(leagueId != "" && seasonId != "") {
+		 $('#generated_table tbody').empty();
+	     $("#spinner").show();
 			$.getJSON('/api/result?leagueid=' + leagueId + "&seasonid=" + seasonId + "&min=" + min, function (data) {
-				$('#generated_table').empty();
 			     $.each(data, function (rank, gamesCount, pointsCount, winsCount, losesCount, tiedsCount, goalsCount, diffCount, logoUri, id, name) {
-			         $('#generated_table').append(
+			         $('#generated_table tbody').append(
 			              $("<tr><td class='center'>" + this.rank + "</td><td><img class='logo-team' src='" + this.logoUri + "'> " + this.name + "</td><td class='center'>" + this.gamesCount + "</td><td class='center'>" + this.pointsCount + "</td><td class='center'>" + this.winsCount + "</td><td class='center'>" + this.tiedsCount + "</td><td class='center'>" + this.losesCount + "</td><td class='center'>" + this.goalsCount + "</td><td class='center'>" + this.diffCount + "</td></tr>")
 			          );
 			     });
-			 });
-		 } else {
-		 	return;
-		}	 
+	   	$("#spinner").hide();
+			 } 
+			);
+		 }
+	   
+	 	
 	}	
 
 	$.getJSON('/api/league/list', function (data) {
@@ -62,13 +67,20 @@
 								$("<h2 id='label'>Tabelle für " + leagueName  + " in der Saison " + $(this).text() + "</h2>")
 							);
 							$('#minuteScale').val(90);
-							$('#numberMinute').text("90");							
-							fillTable (leagueId, seasonId, 90);								
+							$('#numberMinute').text("90");	
+							fillTable (leagueId, seasonId, 90);			
 						});		  	
 					});			     
 				 });								
 			});					  	
-		});			 		     
+		});	
+		
+		
+	    $(document).ready(function(){
+			$("#spinner").hide();
+		});
+		
+	
 	 });	 
 </script>
 </head>
@@ -79,7 +91,7 @@
 	<br>
 	<h1>Bundesliga Analyser</h1>
 	<br>
-	<table class="table">
+	<table id="result-table" class="table">
 		<tr>
 			<td>Liga:</td>
 			<td>
@@ -115,9 +127,14 @@
 	</table>
 </div>
 <br>
-<div class="container">
+<div class="container table-container">
 	<h2 id="label">Tabelle</h2>
-	<br>
+	<br/>
+	<div id="spinner" class="spinner">
+		  <div class="bounce1"></div>
+		  <div class="bounce2"></div>
+		  <div class="bounce3"></div>
+	</div>
 	<table id="generated_table" class="table table-bordered table-hover">
 		<thead>
 			<tr>
@@ -132,8 +149,11 @@
 				<th class="center">Diff</th>
 			</tr>
 		</thead>
+		<tbody>
+		</tbody>
 	</table>
 </div>
+
 
 </body>
 

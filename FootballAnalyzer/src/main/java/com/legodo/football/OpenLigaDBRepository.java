@@ -30,12 +30,18 @@ class OpenLigaDBRepository implements Repository{
 
 	@Override
 	public List<IdentifiableDTO> getSeasons() {
-		return Arrays.asList(new IdentifiableDTO("2017", "2017/2018"), new IdentifiableDTO("2016", "2016/2017"), new IdentifiableDTO("2015", "2015/2016"));
+		return Arrays.asList(new IdentifiableDTO("2017", "2017/2018"), 
+				             new IdentifiableDTO("2016", "2016/2017"), 
+				             new IdentifiableDTO("2015", "2015/2016"),
+				             new IdentifiableDTO("2014", "2014/2015"),
+				             new IdentifiableDTO("2013", "2013/2015"),
+				             new IdentifiableDTO("2012", "2012/2013"),
+				             new IdentifiableDTO("2011", "2011/2012"));
 	}
 
 	@Override
 	public List<IdentifiableDTO> getLeagues() {
-		return Arrays.asList(new IdentifiableDTO("bl1", "1.Bundesliga"), new IdentifiableDTO("bl2", "2.Bundesliga"), new IdentifiableDTO("bl3", "3.Bundesliga"));
+		return Arrays.asList(new IdentifiableDTO("bl1", "1. Bundesliga"), new IdentifiableDTO("bl2", "2. Bundesliga"), new IdentifiableDTO("bl3", "3. Bundesliga"));
 	}
 
 	@Override
