@@ -25,7 +25,7 @@
 				$('#generated_table').empty();
 			     $.each(data, function (rank, gamesCount, pointsCount, winsCount, losesCount, tiedsCount, goalsCount, diffCount, logoUri, id, name) {
 			         $('#generated_table').append(
-			              $("<tr><td class='center'>" + this.rank + "</td><td><img src='" + this.logoUri + "'> " + this.name + "</td><td class='center'>" + this.gamesCount + "</td><td class='center'>" + this.pointsCount + "</td><td class='center'>" + this.winsCount + "</td><td class='center'>" + this.tiedsCount + "</td><td class='center'>" + this.losesCount + "</td><td class='center'>" + this.goalsCount + "</td><td class='center'>" + this.diffCount + "</td></tr>")
+			              $("<tr><td class='center'>" + this.rank + "</td><td><img class='logo-team' src='" + this.logoUri + "'> " + this.name + "</td><td class='center'>" + this.gamesCount + "</td><td class='center'>" + this.pointsCount + "</td><td class='center'>" + this.winsCount + "</td><td class='center'>" + this.tiedsCount + "</td><td class='center'>" + this.losesCount + "</td><td class='center'>" + this.goalsCount + "</td><td class='center'>" + this.diffCount + "</td></tr>")
 			          );
 			     });
 			 });
@@ -107,7 +107,7 @@
 			<td>
 			<form oninput="numberMinute.value=minuteScale.value">
 				<input id="minuteScale" class="range" max="90" min="1" type="range" value="90" onchange="fillTable (leagueId, seasonId, this.value)">
-				<output name="numberMinute">
+				<output id="numberMinute" name="numberMinute">
 				90</output>
 			</form>
 			</td>
