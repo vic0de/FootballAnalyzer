@@ -25,7 +25,7 @@ public class Analyzer {
 	
 	public List<ResultDTO> analyze(int minute, List<Match> matches){
 		final Season season = new Season();
-		matches.stream().filter(match -> match.getGoals().size() > 0).map(match -> converter2MatchGoalList(season, match)).forEach(matchgoals -> season.matchGoals.addAll(matchgoals));
+		matches.stream().filter(match -> match.getMatchIsFinished()).map(match -> converter2MatchGoalList(season, match)).forEach(matchgoals -> season.matchGoals.addAll(matchgoals));
 		
 		// matchgoals are sorted by minute
 		season.matchGoals.sort((matchgoal1, matchgoal2)-> matchgoal1.minute - matchgoal2.minute);
@@ -121,7 +121,11 @@ public class Analyzer {
 		season.matchday.putIfAbsent(matchday, new HashSet<Party>(Arrays.asList(party)));
 		season.matchday.get(matchday).add(party);
 		
-		return match.getGoals().stream().filter(goal -> goal != null).map(goal -> convert(goal,matchday,team1Id, team2Id)).collect(Collectors.toList());
+		if(match.getGoals().isEmpty()) {
+			return Arrays.asList(new MatchGoal(1, matchday, team1Id, team2Id, 0, 0));
+		}else {
+			return match.getGoals().stream().filter(goal -> goal != null).map(goal -> convert(goal,matchday,team1Id, team2Id)).collect(Collectors.toList());
+		}
 	}
 	
 	MatchGoal convert(Goal goal, int matchday, String team1Id, String team2Id) {
